@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h2><a href="{{ path('new_article') }}" class="btn btn-secondary">Ajouter un article</a></h2>
+    <h1>Liste des articles </h1>
+        <table id="site-list-table" class="table table-bordered table-hover dataTable">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Descritpion</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
+                </tr>
+            <thead>
+            <tbody>
+             {% for article in articles %}
+                <tr>
+                    <td>{{ article.title }} </td>
+                    <td>{{ article.description }}</td>
+                    <td><a href="{{ path('edit_article', {id: article.id}) }}" class="btn btn-secondary">Editer</a></td>
+                    <td>
+                    <form method="post" action="{{ path('delete_article', {id: article.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr ?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                    
+                    </td>
+                </tr>
+             {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}
